@@ -1,0 +1,109 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Tenant model - each family/group gets their own tenant
+model Tenant {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users              User[]
+  householdItems     HouseholdItem[]
+  clothingItems      ClothingItem[]
+  miscellaneousItems MiscellaneousItem[]
+}
+
+// User model with tenant relationship
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("user") // admin, user
+  tenantId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+}
+
+// Household Items - furniture, appliances, etc.
+model HouseholdItem {
+  id          String   @id @default(uuid())
+  name        String
+  category    String // furniture, appliances, electronics, kitchen, etc.
+  description String?
+  quantity    Int      @default(1)
+  location    String? // room, storage location
+  purchaseDate DateTime?
+  purchasePrice Float?
+  condition   String? // new, good, fair, poor
+  notes       String?
+  tenantId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([category])
+}
+
+// Clothing Items
+model ClothingItem {
+  id          String   @id @default(uuid())
+  name        String
+  category    String // shirt, pants, dress, shoes, accessories, etc.
+  size        String?
+  color       String?
+  brand       String?
+  season      String? // summer, winter, all-season
+  owner       String? // family member name
+  location    String? // closet, storage
+  purchaseDate DateTime?
+  purchasePrice Float?
+  condition   String? // new, good, fair, poor
+  notes       String?
+  tenantId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([category])
+  @@index([owner])
+}
+
+// Miscellaneous Items - anything else
+model MiscellaneousItem {
+  id          String   @id @default(uuid())
+  name        String
+  category    String // documents, tools, hobby, sports, etc.
+  description String?
+  quantity    Int      @default(1)
+  location    String?
+  purchaseDate DateTime?
+  purchasePrice Float?
+  notes       String?
+  tenantId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([category])
+}
