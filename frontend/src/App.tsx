@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Household from './pages/Household';
 import Clothing from './pages/Clothing';
 import Miscellaneous from './pages/Miscellaneous';
+import Admin from './pages/Admin';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -74,6 +75,16 @@ function AppRoutes() {
           <PrivateRoute>
             <Layout>
               <Miscellaneous />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <Admin />
             </Layout>
           </PrivateRoute>
         }

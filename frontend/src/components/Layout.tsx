@@ -19,6 +19,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     { path: '/miscellaneous', label: 'Miscellaneous' },
   ];
 
+  // Add admin link if user is admin
+  const allNavItems = user?.role === 'admin'
+    ? [...navItems, { path: '/admin', label: 'Admin' }]
+    : navItems;
+
   return (
     <div className="min-h-screen bg-gray-100">
       <nav className="bg-blue-600 text-white shadow-lg">
@@ -28,7 +33,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <h1 className="text-xl font-bold">Personal ERP</h1>
               {user && (
                 <div className="hidden md:flex space-x-4">
-                  {navItems.map((item) => (
+                  {allNavItems.map((item) => (
                     <Link
                       key={item.path}
                       to={item.path}

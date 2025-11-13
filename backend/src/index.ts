@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes';
 import householdRoutes from './routes/householdRoutes';
 import clothingRoutes from './routes/clothingRoutes';
 import miscellaneousRoutes from './routes/miscellaneousRoutes';
+import userRoutes from './routes/userRoutes';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/household', householdRoutes);
 app.use('/api/clothing', clothingRoutes);
 app.use('/api/miscellaneous', miscellaneousRoutes);
+app.use('/api/users', userRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
