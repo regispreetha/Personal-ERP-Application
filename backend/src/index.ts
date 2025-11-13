@@ -6,6 +6,7 @@ import householdRoutes from './routes/householdRoutes';
 import clothingRoutes from './routes/clothingRoutes';
 import miscellaneousRoutes from './routes/miscellaneousRoutes';
 import userRoutes from './routes/userRoutes';
+import reportsRoutes from './routes/reportsRoutes';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use('/api/household', householdRoutes);
 app.use('/api/clothing', clothingRoutes);
 app.use('/api/miscellaneous', miscellaneousRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/reports', reportsRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

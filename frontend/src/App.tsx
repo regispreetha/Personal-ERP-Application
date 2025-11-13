@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Household from './pages/Household';
 import Clothing from './pages/Clothing';
 import Miscellaneous from './pages/Miscellaneous';
+import Reports from './pages/Reports';
 import Admin from './pages/Admin';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -75,6 +76,16 @@ function AppRoutes() {
           <PrivateRoute>
             <Layout>
               <Miscellaneous />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/reports"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <Reports />
             </Layout>
           </PrivateRoute>
         }

@@ -17,6 +17,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     { path: '/household', label: 'Household' },
     { path: '/clothing', label: 'Clothing' },
     { path: '/miscellaneous', label: 'Miscellaneous' },
+    { path: '/reports', label: 'Reports' },
   ];
 
   // Add admin link if user is admin
